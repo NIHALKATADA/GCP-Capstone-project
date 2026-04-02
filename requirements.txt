@@ -1,0 +1,4 @@
+flask:
+ It serves as a backend framework that handles HTTP requests, routing, and template rendering
+flask-mysqldb:
+The extension manages connection lifecycle automatically using Flask's app context, unlike using raw MySQLdb which requires manual teardown
