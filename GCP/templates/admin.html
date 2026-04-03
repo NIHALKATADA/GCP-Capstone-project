@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KU Admin Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f4f7; margin: 0; padding: 20px; }
+        .portal-header { background-color: #e0f2f1; color: #00796b; padding: 10px 20px; border-bottom: 2px solid #b2dfdb; font-weight: bold; margin-bottom: 10px; }
+        .info-bar { background: white; padding: 15px 20px; border: 1px solid #ced4da; border-bottom: none; display: flex; justify-content: space-between; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #009688; }
+        th { background-color: #009688; color: white; padding: 10px; font-size: 13px; border: 1px solid #00796b; }
+        td { border: 1px solid #b2dfdb; padding: 10px; text-align: center; font-size: 13px; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .delete-btn { color: #c62828; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="portal-header">Attendance / Event Registrations</div>
+    <div class="info-bar">
+        <span><strong>Name :</strong> Nihal Krishna Katada</span>
+        <span><strong>Student ID :</strong> KU2507U0050</span>
+        <span><strong>Role :</strong> Admin Dashboard</span>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Sr.No</th><th>Name</th><th>Student ID</th><th>Event Registered</th><th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in registrations %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>
+                    <a href="{{ url_for('delete_registration', id=row[0]) }}" class="delete-btn" onclick="return confirm('Confirm Delete?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
