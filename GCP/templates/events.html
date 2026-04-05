@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KU Portal | All Events</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --ku-teal: #009688; }
+        body { font-family: 'Inter', sans-serif; background: #f4f7f6; margin: 0; display: flex; }
+        .sidebar { width: 250px; background: white; height: 100vh; border-right: 1px solid #ddd; padding: 30px 20px; position: fixed; box-sizing: border-box; }
+        .sidebar-item { padding: 12px; margin: 8px 0; border-radius: 8px; color: #555; text-decoration: none; display: block; }
+        .sidebar-item:hover, .active { background: #f0fdfa; color: var(--ku-teal); font-weight: 600; }
+        .main-content { margin-left: 250px; padding: 40px; width: calc(100% - 250px); box-sizing: border-box; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .event-header { color: var(--ku-teal); margin-top: 0; }
+        .date-tag { background: #e0f2f1; color: #00796b; padding: 4px 10px; border-radius: 5px; font-size: 0.85em; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2 style="color: var(--ku-teal);">KU Portal</h2>
+        <a href="{{ url_for('index') }}" class="sidebar-item">Dashboard</a>
+        <a href="{{ url_for('events_page') }}" class="sidebar-item active">All Events</a>
+    </div>
+    <div class="main-content">
+        <h1>Available Events</h1>
+        {% for event in events %}
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div>
+                    <h3 class="event-header">{{ event.name }}</h3>
+                    <p style="color: #666; margin: 10px 0;">{{ event.desc }}</p>
+                    <a href="{{ url_for('index') }}" style="color: var(--ku-teal); text-decoration: none; font-weight: 600;">Register Now →</a>
+                </div>
+                <span class="date-tag">{{ event.date }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

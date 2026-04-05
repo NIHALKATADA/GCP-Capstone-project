@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KU Portal | Admin Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --ku-teal: #009688; --danger: #e53935; }
+        body { font-family: 'Inter', sans-serif; background: #f4f7f6; margin: 0; display: flex; }
+        .sidebar { width: 250px; background: white; height: 100vh; border-right: 1px solid #ddd; padding: 30px 20px; position: fixed; box-sizing: border-box; }
+        .sidebar-item { padding: 12px; margin: 8px 0; border-radius: 8px; color: #555; text-decoration: none; display: block; }
+        .sidebar-item:hover, .active { background: #f0fdfa; color: var(--ku-teal); font-weight: 600; }
+        .main-content { margin-left: 250px; padding: 40px; width: calc(100% - 250px); box-sizing: border-box; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 15px; background: #fafafa; color: var(--ku-teal); border-bottom: 2px solid #eee; }
+        td { padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9em; }
+        .btn-delete { color: var(--danger); text-decoration: none; font-weight: 600; padding: 5px 10px; border-radius: 5px; }
+        .btn-delete:hover { background: #ffebee; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2 style="color: var(--ku-teal);">Admin Console</h2>
+        <a href="{{ url_for('admin_view') }}" class="sidebar-item active">Student Database</a>
+        <a href="/" class="sidebar-item" style="margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px;">Exit Admin</a>
+    </div>
+
+    <div class="main-content">
+        <h1>Student Registrations</h1>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Student ID</th>
+                        <th>Email</th>
+                        <th>Dept</th>
+                        <th>Phone</th>
+                        <th>Event</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in registrations %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td><strong>{{ row[1] }}</strong></td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td>{{ row[5] }}</td>
+                        <td>{{ row[6] }}</td>
+                        <td>
+                            <a href="{{ url_for('delete_registration', reg_id=row[0]) }}" 
+                               class="btn-delete" 
+                               onclick="return confirm('Permanently delete this record?')">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

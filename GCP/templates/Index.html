@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KU Portal | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --ku-teal: #009688; --dark-teal: #004d40; }
+        body { font-family: 'Inter', sans-serif; background: #f4f7f6; margin: 0; display: flex; }
+        .sidebar { width: 250px; background: white; height: 100vh; border-right: 1px solid #ddd; padding: 30px 20px; position: fixed; box-sizing: border-box; }
+        .sidebar-item { padding: 12px; margin: 8px 0; border-radius: 8px; color: #555; text-decoration: none; display: block; }
+        .sidebar-item:hover, .active { background: #f0fdfa; color: var(--ku-teal); font-weight: 600; }
+        .main-content { margin-left: 250px; padding: 40px; width: calc(100% - 250px); box-sizing: border-box; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .stats-banner { background: var(--dark-teal); color: white; padding: 25px; border-radius: 15px; display: flex; gap: 40px; margin-bottom: 30px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        input, select, button { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #ccc; font-family: inherit; box-sizing: border-box; }
+        .full-width { grid-column: span 2; }
+        button { background: var(--ku-teal); color: white; border: none; font-weight: 600; cursor: pointer; margin-top: 15px; }
+        .activity-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2 style="color: var(--ku-teal);">KU Portal</h2>
+        <a href="{{ url_for('index') }}" class="sidebar-item active">Dashboard</a>
+        <a href="{{ url_for('events_page') }}" class="sidebar-item">All Events</a>
+    </div>
+    <div class="main-content">
+        <h1>Dashboard</h1>
+        <div class="stats-banner">
+            <div><small>Recent Registrations</small><h2>{{ registrations|length }}</h2></div>
+            <div><small>Active Events</small><h2>5</h2></div>
+        </div>
+        <div class="card">
+            <h3>Quick Registration</h3>
+            <form action="/register" method="POST" class="form-grid">
+                <input type="text" name="full_name" placeholder="Full Name" required class="full-width">
+                <input type="text" name="student_id" placeholder="Student ID" required>
+                <input type="email" name="email" placeholder="University Email" required>
+                <select name="department" required>
+                    <option value="" disabled selected>Department</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Design">Design</option>
+                    <option value="Business">Business</option>
+                </select>
+                <input type="text" name="phone" placeholder="Phone Number" required>
+                <select name="event_name" required class="full-width">
+                    <option value="" disabled selected>Select an Event</option>
+                    <option value="Tech Fest 2026">Tech Fest 2026</option>
+                    <option value="Cloud Computing Workshop">Cloud Computing Workshop</option>
+                    <option value="KU Hackathon 1.0">KU Hackathon 1.0</option>
+                    <option value="Cultural Night">Cultural Night</option>
+                    <option value="Sports Carnival">Sports Carnival</option>
+                </select>
+                <button type="submit" class="full-width">Register Now</button>
+            </form>
+        </div>
+        <div class="card">
+            <h3>Recent Activity Log</h3>
+            {% for row in registrations %}
+            <div class="activity-item">
+                <div><strong>{{ row[1] }}</strong><br><small>{{ row[2] }} | {{ row[4] }}</small></div>
+                <div style="color: var(--ku-teal); font-weight: 600; text-align: right;">{{ row[6] }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

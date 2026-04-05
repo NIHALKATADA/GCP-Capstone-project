@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gmail & Password Validation</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 350px;
+            margin: 80px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        span {
+            color: red;
+            font-size: 13px;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h2>Login Form</h2>
+
+        <label>Email:</label>
+        <input type="text" id="email" onkeyup="validateEmail()">
+        <span id="emailMsg"></span>
+
+        <label>Password:</label>
+        <input type="password" id="password" onkeyup="validatePassword()">
+        <span id="passMsg"></span>
+
+        <button onclick="validateForm()">Submit</button>
+
+    </div>
+
+    <script>
+        function validateEmail() {
+            let email = document.getElementById("email").value;
+            let msg = document.getElementById("emailMsg");
+
+            let pattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+            if (email.length > 0) {
+                msg.style.display = "block";
+                if (!pattern.test(email)) {
+                    msg.innerHTML = "Enter valid Gmail (example@gmail.com)";
+                } else {
+                    msg.style.display = "none";
+                }
+            } else {
+                msg.style.display = "none";
+            }
+        }
+
+        function validatePassword() {
+            let password = document.getElementById("password").value;
+            let msg = document.getElementById("passMsg");
+
+            let valid =
+                password.length >= 6 &&
+                /[a-z]/.test(password) &&
+                /[A-Z]/.test(password) &&
+                /[0-9]/.test(password) &&
+                /[!@#$%^&*]/.test(password);
+
+            if (password.length > 0) {
+                msg.style.display = "block";
+                if (!valid) {
+                    msg.innerHTML = "Password must have 6+ chars, upper, lower, number & symbol";
+                } else {
+                    msg.style.display = "none";
+                }
+            } else {
+                msg.style.display = "none";
+            }
+        }
+
+        function validateForm() {
+            let emailMsg = document.getElementById("emailMsg").style.display;
+            let passMsg = document.getElementById("passMsg").style.display;
+
+            if (emailMsg === "none" && passMsg === "none") {
+                alert("Form submitted successfully!");
+            } else {
+                alert("Remove errors first!");
+            }
+        }
+    </script>
+
+</body>
+</html>
