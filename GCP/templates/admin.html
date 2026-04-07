@@ -46,7 +46,7 @@
                 <tbody>
                     {% for row in registrations %}
                     <tr>
-                        <td>{{ row[0] }}</td>
+                        <td>{{ loop.index }}</td>
                         <td><strong>{{ row[1] }}</strong></td>
                         <td>{{ row[2] }}</td>
                         <td>{{ row[3] }}</td>
